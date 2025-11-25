@@ -1,4 +1,4 @@
-# Lamb Activity Tracking and Behavior Analysis (ICCCNT 2024 – Official Codebase)
+# Advancements in Animal Tracking: Assessing Deep Learning Algorithms (ICCCNT 2024 – Official Codebase)
 
 This repository contains the official code implementation of our ICCCNT 2024 paper:
 
@@ -38,11 +38,11 @@ data preparation, evaluation, tracking, and analysis.
 ## Dataset and labels
 
 In our experiments, we worked with lamb videos from a commercial farm, extracted frames, and manually annotated three activity classes:
-
+```text
 - `standing`
 - `eating`
 - `laying`
-
+```
 In this repository we assume:
 
 - Images are stored in: `data/images/`
@@ -52,15 +52,16 @@ YOLO label format (per line):
 
 ```text
 <class_id> <x_center_norm> <y_center_norm> <width_norm> <height_norm>
+```
 
 Class IDs:
-
+```text
 - `0` → `standing`  
 - `1` → `eating`  
 - `2` → `laying`  
+```
 
 These mappings are configurable in `config/paths.yaml`, so we can modify them without touching the core code.
-
 ---
 
 ## Pipeline overview
@@ -111,7 +112,6 @@ We want this repo to be something we, as authors, are proud to show alongside th
 ## Getting started
 
 The intended order of use is:
-
 1. Set paths and classes in `config/paths.yaml`.
 2. Prepare and augment the dataset using the scripts in `src/data_prep/`.
 3. Split the dataset into train/val/test (`src/data_prep/split_dataset.py`).
@@ -123,4 +123,3 @@ The intended order of use is:
    (`src/tracking/track_from_detections.py` and `src/analysis/behavior_stats.py`).
 
 This README serves as a high-level map for the entire codebase so that our implementation and our paper stay tightly aligned.
-
