@@ -1,10 +1,15 @@
-# yolo_dataset.yaml
+# YOLO dataset config for lamb activity detection
+
+# Train / val / test file lists
+# Each file contains absolute or relative paths to images, one per line.
 train: ./data/splits/train.txt
 val: ./data/splits/val.txt
 test: ./data/splits/test.txt
 
+# Number of classes
 nc: 3
 
+# Class names (must match the order in config/paths.yaml)
 names:
   0: standing
   1: eating
