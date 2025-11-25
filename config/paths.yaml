@@ -1,0 +1,19 @@
+dataset_root: "./data"
+
+images_dir: "./data/images"
+yolo_labels_dir: "./data/labels_yolo"
+voc_xml_dir: "./data/labels_voc_xml"
+
+splits_dir: "./data/splits"
+tf_records_dir: "./data/tf_records"
+
+detections_csv: "./data/detections/sample_detections.csv"
+tracks_csv: "./data/detections/tracks.csv"
+
+image_width: 640
+image_height: 480
+
+classes:
+  - standing
+  - eating
+  - laying

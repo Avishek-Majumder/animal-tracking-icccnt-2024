@@ -1,0 +1,11 @@
+# yolo_dataset.yaml
+train: ./data/splits/train.txt
+val: ./data/splits/val.txt
+test: ./data/splits/test.txt
+
+nc: 3
+
+names:
+  0: standing
+  1: eating
+  2: laying
