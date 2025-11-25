@@ -52,3 +52,75 @@ YOLO label format (per line):
 
 ```text
 <class_id> <x_center_norm> <y_center_norm> <width_norm> <height_norm>
+
+Class IDs:
+
+- `0` → `standing`  
+- `1` → `eating`  
+- `2` → `laying`  
+
+These mappings are configurable in `config/paths.yaml`, so we can modify them without touching the core code.
+
+---
+
+## Pipeline overview
+
+The full workflow implemented in this codebase mirrors the pipeline described in our paper:
+
+1. **Data preparation and augmentation**
+   - Load original labeled images
+   - Apply geometric and photometric augmentations  
+     (flips, rotations, blur, brightness/contrast changes, noise)
+   - Keep annotations in YOLO format after augmentation
+
+2. **Dataset splitting**
+   - Create `train`, `val`, and `test` splits
+   - Save file lists that are directly compatible with YOLOv5 / YOLOv7
+
+3. **Format conversion for TensorFlow models**
+   - Convert YOLO annotations → Pascal VOC XML
+   - Convert VOC XML → CSV (and then to TFRecord in a standard TF Object Detection workflow)
+
+4. **Model training (external repositories)**
+   - Train YOLOv5 / YOLOv7 using `config/yolo_dataset.yaml`
+   - Train Faster R-CNN ResNet152 and SSD ResNet101 using the TensorFlow Object Detection API
+
+5. **Detection evaluation**
+   - Collect model detections in a simple CSV format
+   - Compute AP per class and overall mAP at IoU 0.5, as reported in the paper
+
+6. **Tracking and behavior analysis**
+   - Run centroid-based tracking over frame-by-frame detections
+   - Export per-lamb trajectories to CSV
+   - Compute time spent in each activity per lamb and overall behavior statistics
+
+---
+
+## Design principles
+
+While building this repository, we focused on:
+
+- **Clarity** – Descriptive variable names, straightforward logic, and minimal “magic”  
+- **Faithfulness to the paper** – The structure follows the methodology we described in the ICCCNT 2024 publication  
+- **Extensibility** – The code can be adapted to other farms, animal species, or additional behaviors with minimal changes
+
+We want this repo to be something we, as authors, are proud to show alongside the paper.
+
+---
+
+## Getting started
+
+The intended order of use is:
+
+1. Set paths and classes in `config/paths.yaml`.
+2. Prepare and augment the dataset using the scripts in `src/data_prep/`.
+3. Split the dataset into train/val/test (`src/data_prep/split_dataset.py`).
+4. Convert labels for TensorFlow models  
+   (`src/data_prep/convert_yolo_to_voc.py` and `src/data_prep/generate_tf_csv.py`).
+5. Train YOLOv5 / YOLOv7 using the guides in `scripts/`.
+6. Export detections and compute metrics (`src/detection/evaluate_detection.py`).
+7. Run tracking and behavior analysis  
+   (`src/tracking/track_from_detections.py` and `src/analysis/behavior_stats.py`).
+
+This README serves as a high-level map for the entire codebase so that our implementation and our paper stay tightly aligned.
+
