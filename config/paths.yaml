@@ -1,18 +1,29 @@
+# Central configuration for paths and basic dataset settings
+
+# Root folder for all dataset-related files
 dataset_root: "./data"
 
+# Image and annotation locations
 images_dir: "./data/images"
 yolo_labels_dir: "./data/labels_yolo"
 voc_xml_dir: "./data/labels_voc_xml"
 
+# Train / val / test split files
 splits_dir: "./data/splits"
+
+# TensorFlow-related outputs (CSV / TFRecord, etc.)
 tf_records_dir: "./data/tf_records"
 
+# Detection and tracking outputs
+detections_dir: "./data/detections"
 detections_csv: "./data/detections/sample_detections.csv"
 tracks_csv: "./data/detections/tracks.csv"
 
+# Image resolution used in our experiments (can be adapted if needed)
 image_width: 640
 image_height: 480
 
+# Class labels used throughout the project
 classes:
   - standing
   - eating
